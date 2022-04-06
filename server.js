@@ -6,6 +6,10 @@ var io = require('socket.io')(http);
 
 var app = express();
 
+var cors = require('cors');
+app.use(cors({origin: 'http://192.168.1.12:3000'}));
+
+
 io.on('connection', (socket) => {
     console.log('a user is connected');
 });
@@ -25,15 +29,15 @@ const server = app.listen(3000, () => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/messages", express.static(__dirname + '/template'));
+app.use("/message", express.static(__dirname + '/template'));
 
-app.get('/message', (req, res) => {
-    Message.find({}, (err, message)=> {
-        res.send(message);
+app.get('/messages', (req, res) => {
+    Message.find({}, (err, messages)=> {
+        res.send(messages);
     });
 }); 
 
-app.post('/message', (req, res) => {
+app.post('/messages', (req, res) => {
     var message = new Message(req.body);
     message.save((err) =>{
         if(err)
@@ -41,4 +45,13 @@ app.post('/message', (req, res) => {
         io.emit('message', req.body);    
         res.sendStatus(200);    
     });
+});
+
+app.get('/', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+
+    res.send('cors problem fixed:)');
 });
