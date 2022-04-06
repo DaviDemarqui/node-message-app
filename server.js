@@ -7,7 +7,7 @@ var io = require('socket.io')(http);
 var app = express();
 
 var cors = require('cors');
-app.use(cors({origin: 'http://192.168.1.12:3000'}));
+app.use(cors({origin: 'https://zap2.vercel.app'}));
 
 
 io.on('connection', (socket) => {
