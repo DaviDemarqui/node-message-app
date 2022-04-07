@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
     console.log('a user is connected');
 });
 
-const dbUrl = 'mongodb+srv://davi:0802@ddb-01.ngvxa.mongodb.net/DDB-01';
+const dbUrl = 'mongodb+srv://davi:010203@ddb-01.ngvxa.mongodb.net/DDB-01';
 
 mongoose.connect(dbUrl, (err) => {
     console.log('mongodb connected', err);
