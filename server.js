@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
     console.log('a user is connected');
 });
 
-const dbUrl = 'mongodb+srv://davi:010203@ddb-01.ngvxa.mongodb.net/DDB-01';
+const dbUrl = 'mongodb+srv://zap:123@zap.ngvxa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 mongoose.connect(dbUrl, (err) => {
     console.log('mongodb connected', err);
@@ -29,15 +29,15 @@ const server = app.listen(3000, () => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/message", express.static(__dirname + '/template'));
+app.use("/", express.static(__dirname + '/template'));
 
-app.get('/messages', (req, res) => {
+app.get('/', (req, res) => {
     Message.find({}, (err, messages)=> {
         res.send(messages);
     });
 }); 
 
-app.post('/messages', (req, res) => {
+app.post('/', (req, res) => {
     var message = new Message(req.body);
     message.save((err) =>{
         if(err)
